@@ -7,39 +7,16 @@ struct DetailProductView: View {
     var body: some View {
         GeometryReader { geometry in
             ScrollView {
-                
-                ZStack {
-                    Rectangle()
-                        .fill(.mainGray)
-                        .cornerRadius(25)
+                VStack {
+                    PromoDetailProductView(viewModel: viewModel, width: geometry.size.width)
                     
-                    VStack(alignment: .leading) {
-                        DetailProductImageSlider(images: ["book1", "book2", "book3", "book4"])
-                            .frame(width: geometry.size.width, height: geometry.size.width)
-                        
-                        VStack(spacing: 5) {
-                            Text("\(viewModel.product.title)")
-                                .font(.headline)
-                            
-                            Text("Артикул: \(viewModel.product.id)")
-                                .font(.system(size: 14))
-                                .foregroundStyle(.gray)
-                            
-                            Button {
-                                
-                            } label: {
-                                ReviewRatingButton()
-                            }
-                        }
-                        .padding()
-                        
-                    }
+                    PriceDetailProductView(viewModel: viewModel, width: geometry.size.width)
+                    
+                    ReviewDetailProductView(viewModel: viewModel, width: geometry.size.width)
                 }
             }
         }
     }
-    
-    
 }
 
 #Preview {
