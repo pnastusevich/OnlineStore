@@ -5,8 +5,25 @@ struct CartView: View {
     @ObservedObject private(set) var viewModel: CartViewModel
     
     var body: some View {
-        HStack {
-           
+        
+        VStack(alignment: .leading) {
+            
+            Text("Корзина")
+                .font(.title2)
+                .bold()
+            
+            Spacer()
+            
+            HStack {
+                
+                
+                
+            }
+            
         }
     }
+}
+
+#Preview {
+    CartView(viewModel: CartViewModel())
 }

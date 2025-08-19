@@ -6,13 +6,39 @@ struct DetailProductView: View {
     
     var body: some View {
         GeometryReader { geometry in
-            ScrollView {
-                VStack {
-                    PromoDetailProductView(viewModel: viewModel, width: geometry.size.width)
+            ZStack(alignment: .bottom) {
+                ScrollView {
+                    VStack {
+                        PromoDetailProductView(viewModel: viewModel, width: geometry.size.width)
+                        
+                        PriceDetailProductView(viewModel: viewModel, width: geometry.size.width)
+                        
+                        ReviewDetailProductView(viewModel: viewModel, width: geometry.size.width)
+                        
+                        Rectangle()
+                            .frame(width: geometry.size.width,  height: 90)
+                            .foregroundStyle(.white.opacity(0.95))
+                    }
+                }
+                
+                ZStack {
+                    Rectangle()
+                        .frame(width: geometry.size.width,  height: 90)
+                        .foregroundStyle(.white.opacity(0.95))
                     
-                    PriceDetailProductView(viewModel: viewModel, width: geometry.size.width)
-                    
-                    ReviewDetailProductView(viewModel: viewModel, width: geometry.size.width)
+                    Button {
+                        
+                    } label: {
+                        ZStack {
+                            Rectangle()
+                                .frame(width: geometry.size.width - 30,  height: 50)
+                                .foregroundStyle(.blue)
+                                .cornerRadius(15)
+                            
+                            Text("Добавить в корзину")
+                                .foregroundStyle(.white)
+                        }
+                    }
                 }
             }
         }
