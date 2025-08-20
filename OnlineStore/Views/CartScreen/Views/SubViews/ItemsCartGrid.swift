@@ -1,10 +1,11 @@
 
 import SwiftUI
 
-struct ItemsCartCell: View {
+struct ItemsCartGrid: View {
     
+    @ObservedObject private(set) var viewModel: CartViewModel
     var width: CGFloat
-
+    
     var body: some View {
         ZStack {
             Rectangle()
@@ -20,18 +21,16 @@ struct ItemsCartCell: View {
                 
                 Divider()
                 
-                VStack {
-                    ForEach(1...2, id: \.self) { _ in
-                        ItemView(width: width)
-                        ButtonsInItem()
+                LazyVGrid(columns: [GridItem(.flexible())]) {
+                    ForEach(viewModel.products, id: \.self) { product in
+                        ItemViewCell(viewModel: viewModel, item: product, width: width)
                     }
                 }
-      
             }
         }
     }
 }
 
 #Preview {
-    CartView(viewModel: CartViewModel())
+    CartView(viewModel: CartViewModel(cartManager: CartManager()))
 }

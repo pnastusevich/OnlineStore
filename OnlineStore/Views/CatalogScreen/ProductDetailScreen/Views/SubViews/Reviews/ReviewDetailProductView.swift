@@ -18,7 +18,7 @@ struct ReviewDetailProductView: View {
                     } label: {
                         ZStack {
                             Rectangle()
-                                .frame(width: width - 30,  height: 50)
+                                .frame(width: max(width - 30, 100),  height: 50)
                                 .foregroundStyle(.white)
                                 .cornerRadius(15)
                                 .overlay {
@@ -40,7 +40,7 @@ struct ReviewDetailProductView: View {
                     } label: {
                         ZStack {
                             Rectangle()
-                                .frame(width: width - 30,  height: 50)
+                                .frame(width: max(width - 30, 100),  height: 50)
                                 .foregroundStyle(.white)
                                 .cornerRadius(15)
                                 .overlay {

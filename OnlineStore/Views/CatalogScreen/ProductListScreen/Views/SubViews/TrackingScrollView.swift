@@ -52,7 +52,6 @@ struct TrackingScrollView<Content: View>: UIViewRepresentable {
         init(_ parent: TrackingScrollView) { self.parent = parent }
 
         func scrollViewDidScroll(_ scrollView: UIScrollView) {
-            // прямой доступ к contentOffset.y
             parent.offsetY = scrollView.contentOffset.y
         }
     }

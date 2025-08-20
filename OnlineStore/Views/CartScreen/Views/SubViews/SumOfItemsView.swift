@@ -3,6 +3,8 @@
 import SwiftUI
 
 struct SumOfItemsView: View {
+    
+    @ObservedObject private(set) var viewModel: CartViewModel
     var width: CGFloat
     
     var body: some View {
@@ -19,8 +21,7 @@ struct SumOfItemsView: View {
                         .bold()
                     
                     Spacer()
-                    
-                    Text("1 товар")
+                    Text("\(viewModel.count) товар")
                 }
                 
                 HStack {
@@ -29,7 +30,7 @@ struct SumOfItemsView: View {
                     
                     Spacer()
                     
-                    Text("123 $")
+                    Text("\(Int(viewModel.totalPrice)) $")
                         .font(.title3)
                         .bold()
                 }
@@ -40,7 +41,7 @@ struct SumOfItemsView: View {
                     
                     Spacer()
                     
-                    Text(" - 20 $")
+                    Text("- \(Int(viewModel.discount)) $")
                         .font(.title3)
                         .bold()
                         .foregroundStyle(.green)
@@ -55,22 +56,22 @@ struct SumOfItemsView: View {
                     
                     Spacer()
                     
-                    Text("123 $")
+                    Text(" \(Int(viewModel.totalDiscountedPrice)) $")
                         .font(.title2)
                         .bold()
                 }
                 
                 Button { } label: {
-                    ZStack {
-                        Rectangle()
-                            .frame(width: width - 30, height: 50)
-                            .cornerRadius(10)
-                        
-                        Text("Перейти к оформлению")
-                            .foregroundStyle(.white)
-                            .bold()
-                    }
+                    Text("Перейти к оформлению")
+                        .foregroundStyle(.white)
+                        .bold()
+                        .background {
+                            Rectangle()
+                                .frame(width: width - 30, height: 50)
+                                .cornerRadius(10)
+                        }
                 }
+                .padding(.vertical)
             }
             .padding()
         }
@@ -78,6 +79,6 @@ struct SumOfItemsView: View {
 }
 
 #Preview {
-    CartView(viewModel: CartViewModel())
+    CartView(viewModel: CartViewModel(cartManager: CartManager()))
 }
 

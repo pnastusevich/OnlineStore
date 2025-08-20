@@ -3,8 +3,8 @@ import SwiftUI
 
 struct ProductViewCell: View {
 
-    @ObservedObject var viewModel: ProductListViewModel
-    var item: Product
+    @ObservedObject private(set) var viewModel: ProductListViewModel
+    var product: Product
     var width: CGFloat
     
     var body: some View {
@@ -29,21 +29,34 @@ struct ProductViewCell: View {
                 }
        
                 VStack(alignment: .leading) {
-                    Text("\(Int(item.price + 14)) $")
-                        .foregroundStyle(.gray)
-                        .font(.subheadline)
-                        .strikethrough()
+                    HStack {
+                        VStack {
+                            Text("\(Int(product.price)) $")
+                                .foregroundStyle(.gray)
+                                .font(.subheadline)
+                                .strikethrough()
+                            
+                            Text("\(Int(product.discountedPrice)) $")
+                                .foregroundStyle(.black)
+                                .font(.headline)
+                                .bold()
+                        }
+                        Spacer()
+                        
+                        Button {
+                            viewModel.addProductToCart(product)
+                        } label: {
+                            Image(systemName: "cart")
+                                .foregroundStyle(.gray)
+                        }
+                        .padding(.horizontal)
+                    }
                     
-                    Text("\(Int(item.price)) $")
-                        .foregroundStyle(.black)
-                        .font(.headline)
-                        .bold()
-                    
-                    Text("\(item.title)")
+                    Text("\(product.title)")
                         .foregroundStyle(.black)
                         .font(.system(size: 15))
                     
-                    Text("\(item.description)")
+                    Text("\(product.description)")
                         .foregroundStyle(.gray)
                         .font(.system(size: 12))
                         .multilineTextAlignment(.leading)
@@ -60,7 +73,7 @@ struct ProductViewCell: View {
 #Preview {
     ProductListView(viewModel:
                         ProductListViewModel(item: MockModel.sample.category.first!,
-                                             coordinator: CatalogCoordinator(appFactory: AppFactory())),
+                                             coordinator: CatalogCoordinator(appFactory: AppFactory()), cartManager: CartManager()),
                     columns: [
                         GridItem(.flexible()),
                         GridItem(.flexible())
