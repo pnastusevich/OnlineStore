@@ -15,10 +15,6 @@ final class CartViewModel: ObservableObject {
     var hasSelectedProducts: Bool {
         products.contains { $0.isSelected }
     }
-    
-    var isAllSelected: Bool {
-        !products.isEmpty && products.allSatisfy { $0.isSelected }
-    }
 
     init(cartManager: CartManagerProtocol) {
         self.cartManager = cartManager
