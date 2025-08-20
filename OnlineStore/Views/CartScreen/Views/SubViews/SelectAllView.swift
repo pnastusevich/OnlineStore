@@ -4,7 +4,6 @@ struct SelectAllView: View {
     
     @ObservedObject private(set) var viewModel: CartViewModel
     
-    @State private var isSelectedAll: Bool = false
     @State private var showingAlert: Bool = false
     
     var width: CGFloat
@@ -21,7 +20,7 @@ struct SelectAllView: View {
                     Button {
                         viewModel.toggleAllSelection()
                     } label: {
-                            Image(systemName: isSelectedAll ? "checkmark.square.fill" : "stop")
+                            Image(systemName: viewModel.hasSelectedProducts ? "checkmark.square.fill" : "stop")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 20, height: 20)
@@ -61,6 +60,7 @@ struct SelectAllView: View {
                                         .cornerRadius(5)
                                 }
                         }
+                        .disabled(!viewModel.hasSelectedProducts)
                         .alert(isPresented: $showingAlert) {
                             Alert(title: Text("Вы точно желаете удалить выбранныe товары? Отменить данное действие будет невозможно"),
                                   primaryButton: .destructive(Text("Удалить товары"), action: {
@@ -72,9 +72,6 @@ struct SelectAllView: View {
                 }
                 .padding()
             }
-        }
-        .onReceive(viewModel.$products) { _ in
-            isSelectedAll = viewModel.isAllSelected
         }
     }
 }
