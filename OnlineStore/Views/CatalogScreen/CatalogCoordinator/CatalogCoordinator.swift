@@ -46,7 +46,7 @@ final class CatalogCoordinator: ObservableObject {
     }
     
     func makeProductListView(category: Category) -> some View {
-        ProductListView(viewModel: appFactory.makeProductListViewModel(category: category, coordinator: self))
+        ProductListView(viewModel: appFactory.makeProductListViewModel(category: category, coordinator: self, cartManager: appFactory.cartManger))
     }
     
     func makeDetailProductView(product: Product) -> some View {

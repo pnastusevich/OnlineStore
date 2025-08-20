@@ -35,7 +35,7 @@ struct PriceDetailProductView: View {
                     } label: {
                         ZStack {
                             Rectangle()
-                                .frame(width: width - 30, height: 60)
+                                .frame(width: max(width - 30, 100), height: 60)
                                 .cornerRadius(10)
                             Text("Войдите, чтобы накопить бонусы")
                                 .foregroundStyle(.white)
@@ -51,7 +51,7 @@ struct PriceDetailProductView: View {
                         ZStack {
                             Rectangle()
                                 .foregroundStyle(.gray)
-                                .frame(width: width - 30, height: 60)
+                                .frame(width: max(width - 30, 100), height: 60)
                                 .cornerRadius(10)
                             
                             Text("Оплата по частям")
@@ -68,5 +68,5 @@ struct PriceDetailProductView: View {
 }
 
 #Preview {
-    DetailProductView(viewModel: DetailProductViewModel(product: MockModel.sample.category.first!.products.first!))
+    DetailProductView(viewModel: DetailProductViewModel(product: MockModel.sample.category.first!.products.first!, cartManager: CartManager()))
 }

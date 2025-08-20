@@ -2,9 +2,12 @@ import SwiftUI
 
 struct SelectAllView: View {
     
-    var width: CGFloat
+    @ObservedObject private(set) var viewModel: CartViewModel
     
-    @State var isSelectedAll: Bool = false
+    @State private var isSelectedAll: Bool = false
+    @State private var showingAlert: Bool = false
+    
+    var width: CGFloat
     
     var body: some View {
         HStack {
@@ -16,19 +19,12 @@ struct SelectAllView: View {
                 
                 HStack {
                     Button {
-                        isSelectedAll.toggle()
+                        viewModel.toggleAllSelection()
                     } label: {
-                        if isSelectedAll {
-                            Image(systemName: "stop")
+                            Image(systemName: isSelectedAll ? "checkmark.square.fill" : "stop")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 20, height: 20)
-                        } else {
-                            Image(systemName: "checkmark.square.fill")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 20, height: 20)
-                        }
                     }
                     
                     Text("Выбрать всё")
@@ -37,42 +33,52 @@ struct SelectAllView: View {
                     
                     HStack(spacing: 15) {
                         Button { } label: {
-                            ZStack {
-                                Rectangle()
-                                    .frame(width: 30, height: 30)
-                                    .foregroundStyle(.secondaryGray)
-                                    .cornerRadius(5)
-                                
-                                Image(systemName: "arrowshape.turn.up.right")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 20, height: 20)
-                                    .foregroundStyle(.gray)
-                            }
+                            Image(systemName: "arrowshape.turn.up.right")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 20, height: 20)
+                                .foregroundStyle(.gray)
+                                .background {
+                                    Rectangle()
+                                        .frame(width: 30, height: 30)
+                                        .foregroundStyle(.secondaryGray)
+                                        .cornerRadius(5)
+                                }
                         }
                         
-                        Button { } label: {
-                            ZStack {
-                                Rectangle()
-                                    .frame(width: 30, height: 30)
-                                    .foregroundStyle(.secondaryGray)
-                                    .cornerRadius(5)
-                                
-                                Image(systemName: "trash")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 20, height: 20)
-                                    .foregroundStyle(.gray)
-                            }
+                        Button {
+                            showingAlert = true
+                        } label: {
+                            Image(systemName: "trash")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 20, height: 20)
+                                .foregroundStyle(.gray)
+                                .background {
+                                    Rectangle()
+                                        .frame(width: 30, height: 30)
+                                        .foregroundStyle(.secondaryGray)
+                                        .cornerRadius(5)
+                                }
+                        }
+                        .alert(isPresented: $showingAlert) {
+                            Alert(title: Text("Вы точно желаете удалить выбранныe товары? Отменить данное действие будет невозможно"),
+                                  primaryButton: .destructive(Text("Удалить товары"), action: {
+                                viewModel.deleteAllProducts()
+                            }),
+                                  secondaryButton: .cancel(Text("Отмена")))
                         }
                     }
                 }
                 .padding()
             }
         }
+        .onReceive(viewModel.$products) { _ in
+            isSelectedAll = viewModel.isAllSelected
+        }
     }
 }
 
 #Preview {
-    CartView(viewModel: CartViewModel())
+    CartView(viewModel: CartViewModel(cartManager: CartManager.mock))
 }

@@ -13,3 +13,7 @@ struct OnlineStoreApp: App {
         }
     }
 }
+
+#Preview {
+    MainTabScreen(appFactory: AppFactory())
+}

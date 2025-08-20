@@ -20,11 +20,15 @@ struct CartView: View {
                         
                         Spacer()
                         
-                        SelectAllView(width: geometry.size.width)
-                        
-                        ItemsCartCell(width: geometry.size.width)
-                        
-                        SumOfItemsView(width: geometry.size.width)
+                        if viewModel.count > 0 {
+                            SelectAllView(viewModel: viewModel, width: geometry.size.width)
+                            
+                            ItemsCartGrid(viewModel: viewModel, width: geometry.size.width)
+                            
+                            SumOfItemsView(viewModel: viewModel, width: geometry.size.width)
+                        } else {
+                            EmptyCartView()
+                        }
                     }
                 }
             }
@@ -33,5 +37,5 @@ struct CartView: View {
 }
 
 #Preview {
-    CartView(viewModel: CartViewModel())
+    CartView(viewModel: CartViewModel(cartManager: CartManager.mock))
 }

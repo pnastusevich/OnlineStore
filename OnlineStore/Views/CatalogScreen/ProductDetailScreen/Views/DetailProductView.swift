@@ -27,11 +27,11 @@ struct DetailProductView: View {
                         .foregroundStyle(.white.opacity(0.95))
                     
                     Button {
-                        
+                        viewModel.addProductToCart()
                     } label: {
                         ZStack {
                             Rectangle()
-                                .frame(width: geometry.size.width - 30,  height: 50)
+                                .frame(width: max(geometry.size.width - 30, 100),  height: 50)
                                 .foregroundStyle(.blue)
                                 .cornerRadius(15)
                             
@@ -46,7 +46,7 @@ struct DetailProductView: View {
 }
 
 #Preview {
-    DetailProductView(viewModel: DetailProductViewModel(product: MockModel.sample.category.first!.products.first!))
+    DetailProductView(viewModel: DetailProductViewModel(product: MockModel.sample.category.first!.products.first!, cartManager: CartManager()))
 }
 
 

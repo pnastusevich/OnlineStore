@@ -39,14 +39,13 @@ struct ProductListView: View {
                 TrackingScrollView(offsetY: $scrollY) {
                     LazyVGrid(columns: columns) {
                         ForEach(viewModel.item.products, id: \.self) { product in
-                            Button {
+                            ProductViewCell(
+                                viewModel: viewModel,
+                                product: product,
+                                width: max(50, availableWidth)
+                            )
+                            .onTapGesture {
                                 viewModel.didSelectProduct(product)
-                            } label: {
-                                ProductViewCell(
-                                    viewModel: viewModel,
-                                    item: product,
-                                    width: max(50, availableWidth)
-                                )
                             }
                         }
                     }
@@ -73,7 +72,7 @@ struct ProductListView: View {
 #Preview {
     ProductListView(viewModel:
                         ProductListViewModel(item: MockModel.sample.category.first!,
-                                             coordinator: CatalogCoordinator(appFactory: AppFactory())),
+                                             coordinator: CatalogCoordinator(appFactory: AppFactory()), cartManager: CartManager()),
                     columns: [
                         GridItem(.flexible()),
                         GridItem(.flexible())

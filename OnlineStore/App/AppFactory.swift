@@ -4,9 +4,11 @@ import SwiftUI
 final class AppFactory: ObservableObject {
 
     let dataService: DataServiceProtocol
+    let cartManger: CartManagerProtocol
 
     init() {
         self.dataService = MockDataService()
+        self.cartManger = CartManager()
     }
     
     func makeCatalogViewModel(coordinator: CatalogCoordinatorProtocol) -> CatalogViewModel {
@@ -14,18 +16,18 @@ final class AppFactory: ObservableObject {
     }
     
     func makeCartViewModel() -> CartViewModel {
-        CartViewModel()
+        CartViewModel(cartManager: cartManger)
     }
     
     func makeProfileViewModel() -> ProfileViewModel {
         ProfileViewModel()
     }
 
-    func makeProductListViewModel(category: Category, coordinator: CatalogCoordinatorProtocol) -> ProductListViewModel {
-        ProductListViewModel(item: category, coordinator: coordinator)
+    func makeProductListViewModel(category: Category, coordinator: CatalogCoordinatorProtocol,  cartManager: CartManagerProtocol) -> ProductListViewModel {
+        ProductListViewModel(item: category, coordinator: coordinator, cartManager: cartManger)
     }
     
     func makeDetailProductViewModel(product: Product) -> DetailProductViewModel {
-        DetailProductViewModel(product: product)
+        DetailProductViewModel(product: product, cartManager: cartManger)
     }
 }
