@@ -19,7 +19,7 @@ struct Product: Decodable, Hashable {
     var discountedPrice: Double
     var rating: Double
     var count: Int = 1
-    var isSelected: Bool = true
+    var isSelectedInCart: Bool = true
 }
 
 extension MockModel {

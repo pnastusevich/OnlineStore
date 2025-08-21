@@ -39,7 +39,7 @@ struct ItemViewCell: View {
             Button {
                 viewModel.toggleSelection(of: item)
             } label: {
-                Image(systemName: item.isSelected ? "checkmark.square.fill" : "stop")
+                Image(systemName: item.isSelectedInCart ? "checkmark.square.fill" : "stop")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 20, height: 20)

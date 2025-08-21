@@ -2,7 +2,7 @@
 
 import SwiftUI
 
-struct ProductListTitleView: View {
+struct TitleProductList: View {
     var nameCategory: String
     var countProducts: Int
 

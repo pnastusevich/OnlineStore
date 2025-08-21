@@ -1,7 +1,7 @@
 
 import SwiftUI
 
-struct TrackingScrollView<Content: View>: UIViewRepresentable {
+struct CustomScrollView<Content: View>: UIViewRepresentable {
     @Binding var offsetY: CGFloat
     let showsIndicators: Bool
     let content: Content
@@ -46,10 +46,10 @@ struct TrackingScrollView<Content: View>: UIViewRepresentable {
     }
 
     final class UIScrollCoordinator: NSObject, UIScrollViewDelegate {
-        var parent: TrackingScrollView
+        var parent: CustomScrollView
         weak var hostingController: UIHostingController<Content>?
 
-        init(_ parent: TrackingScrollView) { self.parent = parent }
+        init(_ parent: CustomScrollView) { self.parent = parent }
 
         func scrollViewDidScroll(_ scrollView: UIScrollView) {
             parent.offsetY = scrollView.contentOffset.y

@@ -21,9 +21,9 @@ struct CatalogCoordinatorView: View {
                         coordinator.makeDetailProductView(product: product)
                     }
                 }
-        }
-        .onAppear() {
-            coordinator.bindPath($path)
+                .onAppear() {
+                    coordinator.bindPath($path)
+                }
         }
     }
 }
