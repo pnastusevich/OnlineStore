@@ -106,5 +106,5 @@ struct ButtonsInCell: View {
     }
 }
 #Preview {
-    CartView(viewModel: CartViewModel(cartManager: CartManager()))
+    CartView(viewModel: CartViewModel(cartManager: CartManager.mock))
 }

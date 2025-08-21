@@ -13,7 +13,7 @@ final class CartViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     
     var hasSelectedProducts: Bool {
-        products.contains { $0.isSelected }
+        products.contains { $0.isSelectedInCart }
     }
 
     init(cartManager: CartManagerProtocol) {
@@ -63,7 +63,7 @@ final class CartViewModel: ObservableObject {
         cartManager.addProduct(product)
     }
     
-    func increaseCount(of product: Product) {
+    func increaseCount(of product: Product) { 
         cartManager.increaseCountOfItem(of: product)
     }
     
@@ -86,6 +86,4 @@ final class CartViewModel: ObservableObject {
     func toggleAllSelection() {
         cartManager.toggleAllSelection()
     }
-    
-    
 }

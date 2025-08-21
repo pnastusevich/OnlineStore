@@ -22,7 +22,7 @@ struct ProductListView: View {
             let availableWidth = max(0, geometry.size.width - (horizontalPadding * 3))
             
             VStack(alignment: .leading, spacing: 0) {
-                ProductListTitleView(nameCategory: viewModel.item.name,
+                TitleProductList(nameCategory: viewModel.item.name,
                                      countProducts: viewModel.item.products.count
                 )
                 .frame(height: headerHeight)
@@ -32,14 +32,14 @@ struct ProductListView: View {
                            value: headerHeight
                 )
                
-                FiltersProductListView()
+                FiltersProductList()
                     .padding(.horizontal)
                     .padding(.vertical, 10)
               
-                TrackingScrollView(offsetY: $scrollY) {
+                CustomScrollView(offsetY: $scrollY) {
                     LazyVGrid(columns: columns) {
                         ForEach(viewModel.item.products, id: \.self) { product in
-                            ProductViewCell(
+                            ProductCell(
                                 viewModel: viewModel,
                                 product: product,
                                 width: max(50, availableWidth)
@@ -61,7 +61,7 @@ struct ProductListView: View {
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     HStack {
-                        ProductListSearchView()
+                        SearchProductList()
                     }
                 }
             }

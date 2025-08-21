@@ -1,11 +1,14 @@
 
 import SwiftUI
 
-struct ProductViewCell: View {
+struct ProductCell: View {
 
     @ObservedObject private(set) var viewModel: ProductListViewModel
+    
     var product: Product
     var width: CGFloat
+    
+    @State private(set) var isLoading: Bool = false
     
     var body: some View {
             VStack {
@@ -21,7 +24,7 @@ struct ProductViewCell: View {
                         )
                         .cornerRadius(10)
 
-                    ProductViewImageSlider(images: ["basket.fill",
+                    ImageSliderInProduct(images: ["basket.fill",
                                                     "basket",
                                                     "cart.fill",
                                                     "cart"]
@@ -43,13 +46,38 @@ struct ProductViewCell: View {
                         }
                         Spacer()
                         
-                        Button {
-                            viewModel.addProductToCart(product)
-                        } label: {
-                            Image(systemName: "cart")
-                                .foregroundStyle(.gray)
-                        }
-                        .padding(.horizontal)
+                        if isLoading {
+                            ProgressView()
+                                .progressViewStyle(CircularProgressViewStyle(tint: .blue))
+                                .frame(width: 25, height: 25)
+                                .transition(.scale.combined(with: .opacity))
+                                .padding(.horizontal)
+                        } else {
+                            Button {
+                                withAnimation(.easeInOut(duration: 0.2)) {
+                                    isLoading = true
+                                }
+                                
+                                if !viewModel.isInCart(product) {
+                                    viewModel.addProductToCart(product)
+                                } else {
+                                    viewModel.deleteProductInCart(product)
+                                }
+                                
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                    withAnimation(.easeInOut(duration: 0.2)) {
+                                        isLoading = false
+                                    }
+                                }
+                            } label: {
+                                Image(systemName: !viewModel.isInCart(product) ? "cart" : "cart.fill")
+                                    .resizable()
+                                    .foregroundStyle(!viewModel.isInCart(product) ? .gray : .blue)
+                                    .frame(width: 25, height: 25)
+                                    .transition(.scale.combined(with: .opacity))
+                            }
+                            .padding(.horizontal)
+                    }
                     }
                     
                     Text("\(product.title)")

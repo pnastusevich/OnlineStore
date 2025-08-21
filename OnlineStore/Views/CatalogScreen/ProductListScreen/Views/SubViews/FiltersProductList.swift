@@ -1,7 +1,7 @@
 
 import SwiftUI
 
-struct FiltersProductListView: View {
+struct FiltersProductList: View {
     var body: some View {
         HStack(spacing: 10) {
             Button("Фильтры") {}

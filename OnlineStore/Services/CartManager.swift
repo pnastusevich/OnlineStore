@@ -50,7 +50,7 @@ final class CartManager: CartManagerProtocol {
         productsSubject.send(products)
         countSubject.send(products.reduce(0) { $0 + $1.count })
         
-        let selectedProducts = products.filter { $0.isSelected }
+        let selectedProducts = products.filter { $0.isSelectedInCart }
 
         let totalWithoutDiscount = selectedProducts.reduce(0.0) { $0 + ($1.price * Double($1.count)) }
         totalPriceSubject.send(totalWithoutDiscount)
@@ -62,13 +62,13 @@ final class CartManager: CartManagerProtocol {
     // MARK: - Actions
     func toggleSelection(for product: Product) {
         guard let index = products.firstIndex(where: { $0.id == product.id }) else { return }
-        products[index].isSelected.toggle()
+        products[index].isSelectedInCart.toggle()
     }
     
     func toggleAllSelection() {
-        let allSelected = products.allSatisfy { $0.isSelected }
+        let allSelected = products.allSatisfy { $0.isSelectedInCart }
         for index in products.indices {
-            products[index].isSelected = !allSelected
+            products[index].isSelectedInCart = !allSelected
         }
     }
     
@@ -78,7 +78,7 @@ final class CartManager: CartManagerProtocol {
         } else {
             var prod = product
             if prod.count == 0 { prod.count = 1 }
-            prod.isSelected = true
+            prod.isSelectedInCart = true
             products.append(prod)
         }
     }

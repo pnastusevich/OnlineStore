@@ -1,7 +1,7 @@
 
 import SwiftUI
 
-struct ProductListSearchView: View {
+struct SearchProductList: View {
     
     @State private var searchText: String = ""
     

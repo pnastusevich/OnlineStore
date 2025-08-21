@@ -21,25 +21,7 @@ struct DetailProductView: View {
                     }
                 }
                 
-                ZStack {
-                    Rectangle()
-                        .frame(width: geometry.size.width,  height: 90)
-                        .foregroundStyle(.white.opacity(0.95))
-                    
-                    Button {
-                        viewModel.addProductToCart()
-                    } label: {
-                        ZStack {
-                            Rectangle()
-                                .frame(width: max(geometry.size.width - 30, 100),  height: 50)
-                                .foregroundStyle(.blue)
-                                .cornerRadius(15)
-                            
-                            Text("Добавить в корзину")
-                                .foregroundStyle(.white)
-                        }
-                    }
-                }
+                ButtonAddProductToCart(viewModel: viewModel, width: geometry.size.width)
             }
         }
     }

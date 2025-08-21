@@ -1,7 +1,7 @@
 
 import SwiftUI
 
-struct ProductViewImageSlider: View {
+struct ImageSliderInProduct: View {
     
     let images: [String]
     @State private var currentIndex = 0
@@ -24,5 +24,5 @@ struct ProductViewImageSlider: View {
 }
 
 #Preview {
-    ProductViewImageSlider(images: ["basket.fill", "basket", "cart.fill", "cart"])
+    ImageSliderInProduct(images: ["basket.fill", "basket", "cart.fill", "cart"])
 }
