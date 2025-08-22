@@ -3,18 +3,36 @@ import Combine
 
 final class ProductListViewModel: ObservableObject {
     
-    @Published var item: Category
+    @Published private(set) var category: ProductCategory
+    @Published private(set) var productsByCategory: [Product] = []
     @Published private(set) var cartProducts: [Product] = []
     
     private weak var coordinator: CatalogCoordinatorProtocol?
     private let cartManager: CartManagerProtocol
+    private let networkService: NetworkServiceProtocol
     
     private var cancellables = Set<AnyCancellable>()
     
-    init(item: Category, coordinator: CatalogCoordinatorProtocol? = nil, cartManager: CartManagerProtocol) {
-        self.item = item
+    init(category: ProductCategory, coordinator: CatalogCoordinatorProtocol? = nil, cartManager: CartManagerProtocol, networkService: NetworkServiceProtocol) {
+        self.category = category
         self.coordinator = coordinator
         self.cartManager = cartManager
+        self.networkService = networkService
+        
+        networkService.getProductByCategory(category: category.slug)
+            .receive(on: DispatchQueue.main)
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    print("Данные получены")
+                case .failure(let error):
+                    print("Ошибка \(error)")
+                }
+            } receiveValue: { [weak self] category in
+                guard let self else { return }
+                self.productsByCategory = category.products
+            }
+            .store(in: &cancellables)
         
         cartManager.productsPulisher
             .receive(on: DispatchQueue.main)
@@ -24,11 +42,7 @@ final class ProductListViewModel: ObservableObject {
             }
             .store(in: &cancellables)
     }
-    
-    func didSelectProduct(_ product: Product) {
-        coordinator?.navigate(to: .detail(product: product))
-    }
-    
+      
     func addProductToCart(_ product: Product) {
         cartManager.addProduct(product)
     }
@@ -40,4 +54,10 @@ final class ProductListViewModel: ObservableObject {
     func deleteProductInCart(_ product: Product) {
         cartManager.deleteProduct(product)
     }
+    
+    // MARK: - Navigate
+    func didSelectProduct(_ product: Product) {
+        coordinator?.navigate(to: .detail(product: product))
+    }
+    
 }

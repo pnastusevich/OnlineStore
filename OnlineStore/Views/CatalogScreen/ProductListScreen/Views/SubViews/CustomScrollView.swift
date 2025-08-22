@@ -23,9 +23,9 @@ struct CustomScrollView<Content: View>: UIViewRepresentable {
         scrollView.showsVerticalScrollIndicator = showsIndicators
 
         let host = UIHostingController(rootView: content)
+        
         host.view.backgroundColor = .clear
         host.view.translatesAutoresizingMaskIntoConstraints = false
-
         scrollView.addSubview(host.view)
 
         NSLayoutConstraint.activate([
@@ -42,7 +42,10 @@ struct CustomScrollView<Content: View>: UIViewRepresentable {
 
     func updateUIView(_ scrollView: UIScrollView, context: Context) {
         context.coordinator.parent = self
+        
         context.coordinator.hostingController?.rootView = content
+        context.coordinator.hostingController?.view.setNeedsLayout()
+        context.coordinator.hostingController?.view.layoutIfNeeded()
     }
 
     final class UIScrollCoordinator: NSObject, UIScrollViewDelegate {

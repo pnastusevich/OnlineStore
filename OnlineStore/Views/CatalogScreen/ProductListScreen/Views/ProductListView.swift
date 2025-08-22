@@ -5,6 +5,8 @@ struct ProductListView: View {
     
     @ObservedObject private(set) var viewModel: ProductListViewModel
     @State private var headerHeight: CGFloat = 50
+    @State private var scrollOffset: CGFloat = 0
+    
     
     var columns: [GridItem] = [
         GridItem(.flexible()),
@@ -15,35 +17,45 @@ struct ProductListView: View {
     private let minHeaderHeight: CGFloat = 0
     private let maxHeaderHeight: CGFloat = 50
     
-    @State private var scrollY: CGFloat = 0
-    
     var body: some View {
-        GeometryReader { geometry in
-            let availableWidth = max(0, geometry.size.width - (horizontalPadding * 3))
+        let cellWidth = (UIScreen.main.bounds.width - horizontalPadding * 3) / 2
+        
+        VStack(alignment: .leading, spacing: 0) {
+            TitleProductList(nameCategory: viewModel.category.name,
+                             countProducts: viewModel.productsByCategory.count
+            )
+            .frame(height: headerHeight)
+            .clipped()
+            .opacity(headerHeight == 0 ? 0 : 1)
+            .animation(.easeInOut(duration: 0.3),
+                       value: headerHeight
+            )
             
-            VStack(alignment: .leading, spacing: 0) {
-                TitleProductList(nameCategory: viewModel.item.name,
-                                     countProducts: viewModel.item.products.count
-                )
-                .frame(height: headerHeight)
-                .clipped()
-                .opacity(headerHeight == 0 ? 0 : 1)
-                .animation(.easeInOut(duration: 0.5),
-                           value: headerHeight
-                )
-               
-                FiltersProductList()
-                    .padding(.horizontal)
-                    .padding(.vertical, 10)
-              
-                CustomScrollView(offsetY: $scrollY) {
+            FiltersProductList()
+                .padding(.horizontal)
+                .padding(.vertical, 10)
+            
+            ScrollView {
+                VStack(spacing: 0) {
+                    GeometryReader { geo -> Color in
+                        let offset = geo.frame(in: .named("scroll")).minY
+                        DispatchQueue.main.async {
+                            let delta = -offset
+                            let progress = min(max(delta / maxHeaderHeight, 0), 1)
+                            headerHeight = maxHeaderHeight * (1 - progress)
+                        }
+                        return Color.clear
+                    }
+                    .frame(height: 0)
+                    
                     LazyVGrid(columns: columns) {
-                        ForEach(viewModel.item.products, id: \.self) { product in
+                        ForEach(viewModel.productsByCategory, id: \.self) { product in
                             ProductCell(
                                 viewModel: viewModel,
                                 product: product,
-                                width: max(50, availableWidth)
+                                width: cellWidth
                             )
+                            .padding(.bottom, 16)
                             .onTapGesture {
                                 viewModel.didSelectProduct(product)
                             }
@@ -53,28 +65,16 @@ struct ProductListView: View {
                     .padding(.top, 8)
                     .padding(.bottom, 16)
                 }
-                .onChange(of: scrollY) { y in
-                    let delta = max(0, min(maxHeaderHeight, y))
-                    headerHeight = max(maxHeaderHeight - delta, minHeaderHeight)
-                }
             }
-            .toolbar {
-                ToolbarItem(placement: .principal) {
-                    HStack {
-                        SearchProductList()
-                    }
+            .coordinateSpace(name: "scroll")
+        }
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                HStack {
+                    SearchProductList()
                 }
             }
         }
     }
 }
 
-#Preview {
-    ProductListView(viewModel:
-                        ProductListViewModel(item: MockModel.sample.category.first!,
-                                             coordinator: CatalogCoordinator(appFactory: AppFactory()), cartManager: CartManager()),
-                    columns: [
-                        GridItem(.flexible()),
-                        GridItem(.flexible())
-                    ])
-}

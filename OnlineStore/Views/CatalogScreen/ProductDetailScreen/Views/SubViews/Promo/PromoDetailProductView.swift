@@ -13,7 +13,7 @@ struct PromoDetailProductView: View {
                 .cornerRadius(25)
             
             VStack(alignment: .leading) {
-                DetailProductImageSlider(images: ["book1", "book2", "book3", "book4"])
+                DetailProductImageSlider(images: viewModel.product.images)
                     .frame(width: width, height: width)
                 
                 VStack(alignment: .leading, spacing: 10) {

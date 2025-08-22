@@ -55,7 +55,10 @@ final class CartManager: CartManagerProtocol {
         let totalWithoutDiscount = selectedProducts.reduce(0.0) { $0 + ($1.price * Double($1.count)) }
         totalPriceSubject.send(totalWithoutDiscount)
         
-        let totalWithDiscount = selectedProducts.reduce(0.0) { $0 + ($1.discountedPrice * Double($1.count)) }
+        let totalWithDiscount = selectedProducts.reduce(0.0) { partialResult, product in
+                    let finalPrice = product.price * (1 - product.discountedPrice / 100)
+                    return partialResult + (finalPrice * Double(product.count))
+                }
         totalDiscountedPriceSubject.send(totalWithDiscount)
     }
     
@@ -105,36 +108,5 @@ final class CartManager: CartManagerProtocol {
         } else {
             products.remove(at: index)
         }
-    }
-}
-
-extension CartManager {
-    static var mock: CartManager {
-        let manager = CartManager()
-        manager.addProduct(
-            Product(
-                id: 1,
-                title: "iPhone 15 Pro",
-                description: "128 GB, Titanium Blue",
-                category: "Smartphones",
-                price: 999,
-                discountedPrice: 899,
-                rating: 4.8,
-                count: 1
-            )
-        )
-        manager.addProduct(
-            Product(
-                id: 2,
-                title: "AirPods Pro 2",
-                description: "Wireless earbuds",
-                category: "Accessories",
-                price: 249,
-                discountedPrice: 199,
-                rating: 4.7,
-                count: 2
-            )
-        )
-        return manager
     }
 }

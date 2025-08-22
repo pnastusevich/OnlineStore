@@ -3,16 +3,16 @@ import SwiftUI
 
 final class AppFactory: ObservableObject {
 
-    let dataService: DataServiceProtocol
+    let networkService: NetworkServiceProtocol
     let cartManger: CartManagerProtocol
 
     init() {
-        self.dataService = MockDataService()
+        self.networkService = NetworkService(builderURL: BuilderURL())
         self.cartManger = CartManager()
     }
     
     func makeCatalogViewModel(coordinator: CatalogCoordinatorProtocol) -> CatalogViewModel {
-        CatalogViewModel(dataService: dataService, coordinator: coordinator)
+        CatalogViewModel(networkService: networkService, coordinator: coordinator)
     }
     
     func makeCartViewModel() -> CartViewModel {
@@ -23,8 +23,8 @@ final class AppFactory: ObservableObject {
         ProfileViewModel()
     }
 
-    func makeProductListViewModel(category: Category, coordinator: CatalogCoordinatorProtocol,  cartManager: CartManagerProtocol) -> ProductListViewModel {
-        ProductListViewModel(item: category, coordinator: coordinator, cartManager: cartManger)
+    func makeProductListViewModel(category: ProductCategory, coordinator: CatalogCoordinatorProtocol,  cartManager: CartManagerProtocol, networkService: NetworkServiceProtocol) -> ProductListViewModel {
+        ProductListViewModel(category: category, coordinator: coordinator, cartManager: cartManger, networkService: networkService)
     }
     
     func makeDetailProductViewModel(product: Product) -> DetailProductViewModel {

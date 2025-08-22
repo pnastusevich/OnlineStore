@@ -105,6 +105,6 @@ struct ButtonsInCell: View {
         .padding()
     }
 }
-#Preview {
-    CartView(viewModel: CartViewModel(cartManager: CartManager.mock))
-}
+//#Preview {
+//    CartView(viewModel: CartViewModel(cartManager: CartManager.mock))
+//}

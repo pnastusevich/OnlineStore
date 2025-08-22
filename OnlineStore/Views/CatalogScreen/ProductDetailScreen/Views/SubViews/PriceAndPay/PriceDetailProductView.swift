@@ -67,6 +67,3 @@ struct PriceDetailProductView: View {
     }
 }
 
-#Preview {
-    DetailProductView(viewModel: DetailProductViewModel(product: MockModel.sample.category.first!.products.first!, cartManager: CartManager()))
-}
