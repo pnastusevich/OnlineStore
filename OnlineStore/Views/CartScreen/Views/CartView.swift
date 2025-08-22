@@ -35,7 +35,7 @@ struct CartView: View {
         }
     }
 }
-
-#Preview {
-    CartView(viewModel: CartViewModel(cartManager: CartManager.mock))
-}
+//
+//#Preview {
+//    CartView(viewModel: CartViewModel(cartManager: CartManager.mock))
+//}

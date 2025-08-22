@@ -1,7 +1,5 @@
-
 import SwiftUI
-
-struct ImageSliderInProduct: View {
+struct ImageItemView: View {
     
     let images: [String]
     @State private var currentIndex = 0
@@ -41,8 +39,7 @@ struct ImageSliderInProduct: View {
                 }
             }
         }
-        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
+        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
         .indexViewStyle(.page(backgroundDisplayMode: .always))
     }
 }
-

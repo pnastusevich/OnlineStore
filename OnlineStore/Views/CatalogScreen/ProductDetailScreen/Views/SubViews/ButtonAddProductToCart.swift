@@ -24,7 +24,6 @@ struct ButtonAddProductToCart: View {
                             viewModel.addProductToCart()
                         } else {
                             appState.selectedTab = .cart
-                            print("asd")
                         }
                     }
                 } label: {
@@ -83,8 +82,4 @@ struct ButtonAddProductToCart: View {
         }
         .animation(.spring(response: 0.4, dampingFraction: 1), value: viewModel.isInCart())
     }
-}
-
-#Preview {
-    DetailProductView(viewModel: DetailProductViewModel(product: MockModel.sample.category.first!.products.first!, cartManager: CartManager()))
 }

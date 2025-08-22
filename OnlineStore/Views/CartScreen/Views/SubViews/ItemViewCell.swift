@@ -9,12 +9,17 @@ struct ItemViewCell: View {
     let item: Product
     var width: CGFloat
     
+    private var finalPrice: Double {
+        item.price * (1 - item.discountedPrice / 100)
+    }
+  
+    
     var body: some View {
         HStack {
-            Image(systemName: "photo")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
+            
+            ImageItemView(images: item.images)
                 .frame(maxWidth: width / 4)
+                .cornerRadius(10)
             
             VStack(alignment: .leading, spacing: 5) {
                 Text("\(item.title)")
@@ -22,11 +27,12 @@ struct ItemViewCell: View {
                 Text("\(item.description)")
                     .font(.system(size: 14))
                     .foregroundStyle(.gray)
+                    .lineLimit(3)
                 
                 HStack {
-                    Text("\(Int(item.discountedPrice) * item.count) $")
+                    Text("\(formatPrice(finalPrice * Double(item.count)))")
                         .bold()
-                    Text("\(Int(item.price) * item.count) $")
+                    Text("\(formatPrice(item.price * Double(item.count)))")
                         .font(.system(size: 15))
                         .foregroundStyle(.gray)
                         .strikethrough()
@@ -50,8 +56,9 @@ struct ItemViewCell: View {
         
         ButtonsInCell(viewModel: viewModel, item: item)
     }
+    
+    private func formatPrice(_ price: Double) -> String {
+        String(format: "%.2f $", price)
+    }
 }
 
-#Preview {
-    CartView(viewModel: CartViewModel(cartManager: CartManager.mock))
-}

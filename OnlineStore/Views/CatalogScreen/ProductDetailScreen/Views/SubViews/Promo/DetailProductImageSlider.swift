@@ -11,21 +11,34 @@ struct DetailProductImageSlider: View {
         
         TabView(selection: $currentIndex) {
             ForEach(0..<images.count, id: \.self) { index in
-                
                 ZStack {
                     Rectangle()
-                        .fill(.mainGray)
-                    VStack {
-                        Image(images[index])
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: 200)
-                            .foregroundStyle(.gray)
-                            .tag(index)
-                        Rectangle()
-                            .fill(.mainGray)
-                            .frame(maxHeight: 50)
+                        .fill(LinearGradient(gradient: Gradient(
+                            colors: [.gray.opacity(0.3), .mainGray]),
+                                             startPoint: .top,
+                                             endPoint: .bottom))
+                    
+                    AsyncImage(url: URL(string: images[index])) { phase in
+                        switch phase {
+                        case .empty:
+                            ProgressView()
+                                .progressViewStyle(CircularProgressViewStyle(tint: .blue))
+                                .scaleEffect(1.5)
+                        case .success(let image):
+                            image
+                                .resizable()
+                                .scaledToFit()
+                                .clipped()
+                        case .failure(_):
+                            Image(systemName: "Photo")
+                                .resizable()
+                                .scaledToFit()
+                                .foregroundColor(.gray)
+                        @unknown default:
+                            EmptyView()
+                        }
                     }
+                    .tag(index)
                 }
             }
         }
@@ -34,7 +47,4 @@ struct DetailProductImageSlider: View {
     }
 }
 
-#Preview {
-    DetailProductImageSlider(images: ["book1", "book2", "book3", "book4"])
-}
 

@@ -2,6 +2,7 @@ import SwiftUI
 
 struct EmptyCartView: View {
 
+    @EnvironmentObject var appState: AppState
     
     var body: some View {
         
@@ -19,8 +20,9 @@ struct EmptyCartView: View {
                     .foregroundStyle(.gray)
                     .multilineTextAlignment(.center)
                 
-                
-                Button { } label: {
+                Button {
+                    appState.selectedTab = .home
+                } label: {
                     Text("Начать покупки")
                         .font(.system(size: 13))
                         .bold()

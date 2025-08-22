@@ -3,7 +3,7 @@ import SwiftUI
 struct GridViewCell: View {
     
     @ObservedObject private(set) var viewModel: CatalogViewModel
-    let item: Category
+    let item: ProductCategory
     
     var body: some View {
         ZStack {

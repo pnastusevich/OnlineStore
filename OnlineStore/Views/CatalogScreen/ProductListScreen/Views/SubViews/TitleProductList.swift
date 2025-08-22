@@ -3,6 +3,7 @@
 import SwiftUI
 
 struct TitleProductList: View {
+    
     var nameCategory: String
     var countProducts: Int
 

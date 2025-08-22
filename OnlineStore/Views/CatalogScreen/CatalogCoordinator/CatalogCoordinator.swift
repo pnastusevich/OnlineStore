@@ -3,7 +3,7 @@ import SwiftUI
 
 // MARK: - CatalogRoute
 enum CatalogRoute: Hashable {
-    case productsList(category: Category)
+    case productsList(category: ProductCategory)
     case detail(product: Product)
 }
 // MARK: - CatalogCoordinating Protocol
@@ -45,8 +45,8 @@ final class CatalogCoordinator: ObservableObject {
         CatalogView(viewModel: appFactory.makeCatalogViewModel(coordinator: self))
     }
     
-    func makeProductListView(category: Category) -> some View {
-        ProductListView(viewModel: appFactory.makeProductListViewModel(category: category, coordinator: self, cartManager: appFactory.cartManger))
+    func makeProductListView(category: ProductCategory) -> some View {
+        ProductListView(viewModel: appFactory.makeProductListViewModel(category: category, coordinator: self, cartManager: appFactory.cartManger, networkService: appFactory.networkService))
     }
     
     func makeDetailProductView(product: Product) -> some View {
