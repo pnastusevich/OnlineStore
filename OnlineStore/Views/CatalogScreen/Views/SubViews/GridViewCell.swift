@@ -10,32 +10,25 @@ struct GridViewCell: View {
             Rectangle()
                 .fill(.mainGray)
                 .cornerRadius(10)
-    
+            
             VStack {
+                HStack {
+                    Text(item.name)
+                        .foregroundStyle(.black)
+                        .font(.system(size: 12))
+                        .multilineTextAlignment(.leading)
+                        .padding([.top, .leading], 8)
+                    Spacer()
+                }
                 Spacer()
                 
-                ZStack {
-                    Image(systemName: "basket.fill")
+                HStack {
+                    Spacer()
+                    Image(item.slug)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .clipped()
-                        .frame(width: 50)
-                        .foregroundStyle(.gray)
-                    
-                    Rectangle()
-                        .fill(.clear)
-                        .frame(height: 60)
-                        .background(
-                            LinearGradient(gradient: Gradient(colors: [.clear, .mainGray]),
-                                           startPoint: .top,
-                                           endPoint: .bottom)
-                        )
+                        .padding([.bottom, .trailing], 8)
                 }
-                
-                Text("\(item.name)")
-                    .foregroundStyle(.black)
-                    .font(.system(size: 10))
-                    .padding()
             }
         }
     }

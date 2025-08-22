@@ -10,7 +10,7 @@ struct PhotosReviewDetailProductView: View {
                         Rectangle()
                             .frame(width: 70, height: 140)
                             .foregroundStyle(.white)
-                            .cornerRadius(15)
+                            .cornerRadius(10)
                         
                         VStack {
                             Image(systemName: "person.bubble")

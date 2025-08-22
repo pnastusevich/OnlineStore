@@ -29,14 +29,14 @@ struct PromoDetailProductView: View {
                     Text("\(viewModel.product.title)")
                         .font(.headline)
                     
-                    Text("Артикул: \(viewModel.product.id)")
+                    Text("Артикул: \(viewModel.product.sku)")
                         .font(.system(size: 14))
                         .foregroundStyle(.gray)
                     
                     Button {
                         
                     } label: {
-                        ReviewRatingButton()
+                        ReviewRatingButton(viewModel: viewModel)
                     }
                     .buttonStyle(.plain)
                 }

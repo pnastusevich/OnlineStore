@@ -32,7 +32,7 @@ struct GridView: View {
                             viewModel.didSelectItem(category: item)
                         } label: {
                             GridViewCell(viewModel: viewModel, item: item)
-                                .frame(width: max(width / 3 - 5, 50))
+                                .frame(width: max(width / 3 - 5, 50), height: max(width / 3 - 5, 50))
                         }
                     }
                 }

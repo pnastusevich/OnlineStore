@@ -1,10 +1,10 @@
-
-
 import SwiftUI
 
 struct ReviewRatingButton: View {
+    
+    @ObservedObject private(set) var viewModel: DetailProductViewModel
+    
     var body: some View {
-        
         HStack(spacing: 20) {
             ZStack {
                 Rectangle()
@@ -17,10 +17,10 @@ struct ReviewRatingButton: View {
                         Image(systemName: "star.fill")
                             .foregroundStyle(.yellow)
                         
-                        Text("4.8")
+                        Text("\(formatRating(viewModel.product.rating))")
                             .bold()
                     }
-                    Text("45 отзывов")
+                    Text("\(viewModel.product.reviews.count) отзыва")
                         .foregroundStyle(.gray)
                         .font(.system(size: 11))
                 }
@@ -47,8 +47,11 @@ struct ReviewRatingButton: View {
             }
         }
     }
+    private func formatRating(_ rating: Double) -> String {
+        String(format: "%.2f", rating)
+    }
 }
 
-#Preview {
-    ReviewRatingButton()
-}
+//#Preview {
+//    ReviewRatingButton(viewModel: D)
+//}

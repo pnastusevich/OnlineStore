@@ -30,7 +30,7 @@ struct SumOfItemsView: View {
                     
                     Spacer()
                     
-                    Text("\(formatPrice(viewModel.totalPrice)) $")
+                    Text("\(formatPrice(viewModel.totalPrice))")
                         .font(.title3)
                         .bold()
                 }
@@ -41,7 +41,7 @@ struct SumOfItemsView: View {
                     
                     Spacer()
                     
-                    Text("- \(formatPrice(viewModel.discount)) $")
+                    Text("- \(formatPrice(viewModel.discount))")
                         .font(.title3)
                         .bold()
                         .foregroundStyle(.green)
@@ -56,7 +56,7 @@ struct SumOfItemsView: View {
                     
                     Spacer()
                     
-                    Text(" \(formatPrice(viewModel.totalDiscountedPrice)) $")
+                    Text(" \(formatPrice(viewModel.totalDiscountedPrice))")
                         .font(.title2)
                         .bold()
                 }

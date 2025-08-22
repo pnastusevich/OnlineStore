@@ -11,7 +11,7 @@ struct ReviewDetailProductView: View {
                     .cornerRadius(15)
                 
                 VStack(spacing: 20) {
-                    TitleReviewProductCell()
+                    TitleReviewProductCell(rating: viewModel.product.rating, count: viewModel.product.reviews.count)
                     
                     Button {
                         
@@ -33,7 +33,7 @@ struct ReviewDetailProductView: View {
                     
                     PhotosReviewDetailProductView()
                     
-                    TextReviewDetailProductView()
+                    TextReviewDetailProductView(reviews: viewModel.product.reviews)
                     
                     Button {
                         
@@ -56,4 +56,5 @@ struct ReviewDetailProductView: View {
             
         }
     }
+    
 }

@@ -3,10 +3,13 @@
 import SwiftUI
 
 struct TextReviewDetailProductView: View {
+    
+    var reviews: [Review]
+    
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack {
-                ForEach(1...3, id: \.self) { _ in
+                ForEach(reviews, id: \.self) { review in
                     ZStack(alignment: .top) {
                         Rectangle()
                             .frame(maxWidth: .infinity, maxHeight: 200)
@@ -15,7 +18,7 @@ struct TextReviewDetailProductView: View {
                         
                         VStack(alignment: .leading) {
                             HStack(spacing: 15) {
-                                Text("Сергей")
+                                Text("\(review.reviewerName)")
                                 
                                 Spacer()
                                 
@@ -28,13 +31,13 @@ struct TextReviewDetailProductView: View {
                             }
                             
                             
-                            
-                            Text("30 июля 2025")
+                            Text("\(review.formattedDate)")
                                 .foregroundStyle(.gray)
                                 .font(.system(size: 16))
                                 .padding(.vertical, 4)
+                                
                             
-                            Text("Крутой товар")
+                            Text("\(review.comment)")
                                 .padding(.vertical)
                         }
                         .padding()

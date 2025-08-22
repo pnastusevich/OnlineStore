@@ -11,12 +11,8 @@ struct ProductCell: View {
     @State private(set) var isLoading: Bool = false
     
     private var finalPrice: Double {
-        product.price * (1 - product.discountedPrice / 100)
+        product.price * (1 - product.discountPercentage / 100)
     }
-    
-    private func formatPrice(_ price: Double) -> String {
-            String(format: "%.2f $", price)
-        }
     
     var body: some View {
         VStack {
@@ -76,6 +72,7 @@ struct ProductCell: View {
                 Text("\(product.title)")
                     .foregroundStyle(.black)
                     .font(.system(size: 15))
+                    .padding(.bottom, 5)
                 
                 Text("\(product.description)")
                     .foregroundStyle(.gray)
@@ -84,8 +81,37 @@ struct ProductCell: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .fixedSize(horizontal: false, vertical: true)
                     .lineLimit(2)
+                
+                HStack {
+                    Image(systemName: "star.fill")
+                        .resizable()
+                        .frame(width: 15, height: 15)
+                        .foregroundStyle(.yellow)
+                    
+                    Text(formatPrice(product.rating))
+                        .font(.system(size: 13))
+                    
+                    Spacer()
+                    
+                    HStack {
+                        Image(systemName: "message.fill")
+                            .resizable()
+                            .frame(width: 10, height: 10)
+                            .foregroundStyle(.gray)
+                        
+                        Text("\(product.reviews.count) отзыва")
+                            .font(.system(size: 13))
+                            .bold()
+                            .foregroundStyle(.gray)
+                    }
+                }
+                .padding(.horizontal, 5)
             }
         }
+    }
+    
+    private func formatPrice(_ price: Double) -> String {
+        String(format: "%.2f", price)
     }
 }
 

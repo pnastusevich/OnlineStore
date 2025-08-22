@@ -1,5 +1,3 @@
-
-
 import SwiftUI
 import Combine
 
@@ -56,7 +54,7 @@ final class CartManager: CartManagerProtocol {
         totalPriceSubject.send(totalWithoutDiscount)
         
         let totalWithDiscount = selectedProducts.reduce(0.0) { partialResult, product in
-                    let finalPrice = product.price * (1 - product.discountedPrice / 100)
+                    let finalPrice = product.price * (1 - product.discountPercentage / 100)
                     return partialResult + (finalPrice * Double(product.count))
                 }
         totalDiscountedPriceSubject.send(totalWithDiscount)

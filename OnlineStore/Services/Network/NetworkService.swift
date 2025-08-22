@@ -5,6 +5,7 @@ import Combine
 protocol NetworkServiceProtocol {
     func getCategories() -> AnyPublisher<[ProductCategory], NetworkError>
     func getProductByCategory(category: String) -> AnyPublisher<ProductsResponse, NetworkError>
+    func searchProduct(query: String) -> AnyPublisher<ProductsResponse, NetworkError>
 }
 
 final class NetworkService: NetworkServiceProtocol {
@@ -21,6 +22,10 @@ final class NetworkService: NetworkServiceProtocol {
     
     func getProductByCategory(category: String) -> AnyPublisher<ProductsResponse, NetworkError> {
         getData(ProductsResponse.self, endpoint: Endpoint.productsByCategory(category: category))
+    }
+    
+    func searchProduct(query: String) -> AnyPublisher<ProductsResponse, NetworkError> {
+        getData(ProductsResponse.self, endpoint: Endpoint.searchProducts(query: query))
     }
     
     private func getData<T: Decodable>(_ type: T.Type, endpoint: EnpointProtocol) -> AnyPublisher<T, NetworkError> {
@@ -59,23 +64,3 @@ final class NetworkService: NetworkServiceProtocol {
         }
     }
 }
-
-
-
-
-
-//
-//final class MockDataService: NetworkServiceProtocol {
-//    
-//    func getData<T>(_ type: T.Type) -> AnyPublisher<T, Error> where T: Decodable {
-//        return Future { promise in
-//            let data = self.request(type: T.self)
-//            promise(.success(data))
-//        }
-//        .eraseToAnyPublisher()
-//    }
-//    func request<T: Decodable>(type: T.Type) -> T {
-//        let data = MockModel.sample
-//        return data as! T
-//    }
-//}

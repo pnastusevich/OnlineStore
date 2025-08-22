@@ -3,12 +3,15 @@
 import SwiftUI
 
 struct TitleReviewProductCell: View {
+    var rating: Double
+    var count: Int
+    
     var body: some View {
         HStack {
-            Text("Отзывы")
+            Text("Отзыва")
                 .font(.title3)
                 .bold()
-            Text("45")
+            Text("\(count)")
                 .font(.callout)
             
             Spacer()
@@ -19,8 +22,12 @@ struct TitleReviewProductCell: View {
                         .foregroundStyle(.yellow)
                 }
             }
-            Text("4.8")
+            Text(formatRating(rating))
         }
+    }
+    
+    private func formatRating(_ rating: Double) -> String {
+        String(format: "%.2f", rating)
     }
 }
 

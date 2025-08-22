@@ -10,7 +10,7 @@ struct ItemViewCell: View {
     var width: CGFloat
     
     private var finalPrice: Double {
-        item.price * (1 - item.discountedPrice / 100)
+        item.price * (1 - item.discountPercentage / 100)
     }
   
     
