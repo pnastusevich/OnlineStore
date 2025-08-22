@@ -35,11 +35,11 @@ struct SelectAllView: View {
                             Image(systemName: "arrowshape.turn.up.right")
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: 20, height: 20)
+                                .frame(width: 30, height: 30)
                                 .foregroundStyle(.gray)
                                 .background {
                                     Rectangle()
-                                        .frame(width: 30, height: 30)
+                                        .frame(width: 40, height: 40)
                                         .foregroundStyle(.secondaryGray)
                                         .cornerRadius(5)
                                 }
@@ -51,11 +51,11 @@ struct SelectAllView: View {
                             Image(systemName: "trash")
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: 20, height: 20)
+                                .frame(width: 30, height: 30)
                                 .foregroundStyle(.gray)
                                 .background {
                                     Rectangle()
-                                        .frame(width: 30, height: 30)
+                                        .frame(width: 40, height: 40)
                                         .foregroundStyle(.secondaryGray)
                                         .cornerRadius(5)
                                 }

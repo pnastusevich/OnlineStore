@@ -13,11 +13,11 @@ struct ButtonsInCell: View {
                 Image(systemName: "heart.fill")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 15, height: 15)
+                    .frame(width: 20, height: 20)
                     .foregroundStyle(.black)
                     .background {
                         Rectangle()
-                            .frame(width: 30, height: 30)
+                            .frame(width: 40, height: 40)
                             .foregroundStyle(.secondaryGray)
                             .cornerRadius(5)
                     }
@@ -29,11 +29,11 @@ struct ButtonsInCell: View {
                 Image(systemName: "trash")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 15, height: 15)
+                    .frame(width: 20, height: 20)
                     .foregroundStyle(.black)
                     .background {
                         Rectangle()
-                            .frame(width: 30, height: 30)
+                            .frame(width: 40, height: 40)
                             .foregroundStyle(.secondaryGray)
                             .cornerRadius(5)
                     }
@@ -48,7 +48,7 @@ struct ButtonsInCell: View {
             
             ZStack {
                 Rectangle()
-                    .frame(width: 100, height: 30)
+                    .frame(width: 100, height: 40)
                     .foregroundStyle(.secondaryGray)
                     .cornerRadius(5)
                 
@@ -63,7 +63,7 @@ struct ButtonsInCell: View {
                             Image(systemName: "minus")
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: 10, height: 10)
+                                .frame(width: 15, height: 15)
                                 .foregroundStyle(.black)
                     }
                     .alert(isPresented: $showingAlert) {
@@ -84,7 +84,7 @@ struct ButtonsInCell: View {
                           Image(systemName: "plus")
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: 10, height: 10)
+                                .frame(width: 15, height: 15)
                                 .foregroundStyle(.black)
                     }
                 }
@@ -96,7 +96,7 @@ struct ButtonsInCell: View {
                 Text("Купить")
                     .background {
                         Rectangle()
-                            .frame(width: 80, height: 30)
+                            .frame(width: 80, height: 40)
                             .foregroundStyle(.secondaryGray)
                             .cornerRadius(5)
                     }
